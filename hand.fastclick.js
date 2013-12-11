@@ -16,12 +16,12 @@
     // pointerout    --> ***
     // pointerover   --> ***
 
-    var debugg = function() {
+    /*var debugg = function() {
       this.start = this.start || new Date().getTime();
       this.curr = this.start - (new Date().getTime());
 
       console.log(Math.abs(this.curr), arguments);
-    };
+    };*/
   
   if (!!!HANDJS) throw new Error("this script requires hand.js");
 
@@ -35,7 +35,7 @@
 
   HANDJS.FastClick.prototype.handleEvent = function(event) {
     var evt = event.pointerType + ':' + event.type;
-    debugg("HANDJS.FastClick.prototype.handleEvent", evt);
+    //debugg("HANDJS.FastClick.prototype.handleEvent", evt);
     switch (evt) {
       case 'touch:pointerdown'/*'touchstart'*/: this.onTouchStart(event); break;
       case 'touch:pointermove'/*'touchmove'*/: this.onTouchMove(event); break;
@@ -50,7 +50,7 @@
   };
 
   HANDJS.FastClick.prototype.onTouchStart = function(event) {
-    debugg('HANDJS.FastClick.prototype.onTouchStart:', event.type, event.pointerType);
+    //debugg('HANDJS.FastClick.prototype.onTouchStart:', event.type, event.pointerType);
     event.stopPropagation();
 
     this.element.addEventListener('pointerup'/*'touchend'*/, this, false);
@@ -61,7 +61,7 @@
   };
 
   HANDJS.FastClick.prototype.onTouchMove = function(event) {
-    debugg('HANDJS.FastClick.prototype.onTouchMove:', event.type, event.pointerType);
+    //debugg('HANDJS.FastClick.prototype.onTouchMove:', event.type, event.pointerType);
     if (Math.abs(event/*.touches[0]*/.clientX - this.startX) > 10 ||
         Math.abs(event/*.touches[0]*/.clientY - this.startY) > 10) {
       this.reset();
@@ -69,7 +69,7 @@
   };
 
   HANDJS.FastClick.prototype.onClick = function(event) {
-    debugg('HANDJS.FastClick.prototype.onClick:', event.type, event.pointerType);
+    //debugg('HANDJS.FastClick.prototype.onClick:', event.type, event.pointerType);
     event.stopPropagation();
     this.reset();
     this.handler(event);
@@ -86,7 +86,7 @@
 
   HANDJS.clickbuster = function() {};
   HANDJS.clickbuster.preventGhostClick = function(x, y) {
-    debugg('HANDJS.clickbuster.preventGhostClick:', event.type, event.pointerType);
+    //debugg('HANDJS.clickbuster.preventGhostClick:', event.type, event.pointerType);
     HANDJS.clickbuster.coordinates.push(x, y);
     window.setTimeout(HANDJS.clickbuster.pop, 2500);
   };
@@ -97,12 +97,12 @@
 
 
   HANDJS.clickbuster.onClick = function(event) {
-    debugg('global click handler', event);
+    //debugg('global click handler', event);
     for (var i = 0; i < HANDJS.clickbuster.coordinates.length; i += 2) {
       var x = HANDJS.clickbuster.coordinates[i];
       var y = HANDJS.clickbuster.coordinates[i + 1];
       if (Math.abs(event.clientX - x) < 10 && Math.abs(event.clientY - y) < 10) {
-        debugg('Found', event);
+        //debugg('Found', event);
         event.stopPropagation();
         event.preventDefault();
       }
